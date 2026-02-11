@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('dotenv').config();
 const Discord = require("discord.js");
 const path = require('path')
 const sqlite3 = require('sqlite3').verbose();
@@ -166,7 +166,7 @@ client.on('ready', async () => {
 
 client.slashCommands = new Discord.Collection()
 
-client.login(process.env.TOKEN);
+client.login(process.env. TOKEN);
 
 require('./handler')(client)
 
@@ -736,4 +736,5 @@ doSomethingAsync().then(result => {
 });
   // Mensaje final para confirmar que todos los eventos han sido procesados
   console.log(`Total de eventos cargados: ${loadedEvents}`);
+  client.login(process.env.TOKEN);
 });
