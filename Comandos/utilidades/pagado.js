@@ -8,14 +8,14 @@ module.exports = {
 
   run: async (client, interaction) => {
     // ID del rol requerido
-    const requiredRoleId = "1471004352419332198";
+    const requiredRoleId = "1469967630365622403";
 
     // Verificar si el usuario tiene el rol
     const member = interaction.member;
-    const hasRole = member.roles.cache.has(requiredRoleId);"1471004352419332198"
+    const hasRole = member.roles.cache.has(requiredRoleId);"1469967630365622403"
 
     if (!hasRole) {
-      return interaction.reply({ content: "<:warninghost:1383935369275379874> | No tienes permiso para usar este comando.", ephemeral: true });
+      return interaction.reply({ content: "| No tienes permiso para usar este comando.", ephemeral: true });
     }
 
     let bot = client.user.username;
@@ -32,7 +32,7 @@ module.exports = {
   `Tu transacción ha sido registrada y tu pedido está en curso.\n\n` +
 
   `**🚚 Entrega en proceso**\n` +
-  `> Un miembro de nuestro equipo <@1469967630365622403> se encargará de entregarte tu producto en breve.\n` +
+  `> Un miembro de nuestro equipo <@&1469967630365622403> se encargará de entregarte tu producto en breve.\n` +
   `> **Por favor, evita mencionar al staff innecesariamente mientras se gestiona tu entrega.**\n\n` +
 
   `**🛠️ Soporte**\n` +
@@ -45,7 +45,7 @@ module.exports = {
   `Your transaction has been received and your order is being processed.\n\n` +
 
   `**🚚 Delivery in progress**\n` +
-  `> A staff member <@1469967630365622403> will handle the delivery shortly.\n` +
+  `> A staff member <@&1469967630365622403> will handle the delivery shortly.\n` +
   `> **Please avoid tagging staff unnecessarily while your order is being fulfilled.**\n\n` +
 
   `**🛠️ Support**\n` +

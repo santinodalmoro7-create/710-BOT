@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { REST, Routes, ApplicationCommandType } = require('discord.js');
 const { clientId, guildId, token } = require('../config.json');
 const fs = require('fs');
@@ -35,7 +36,7 @@ async function registerCommands() {
     }
   }
 
-  const rest = new REST({ version: '10' }).setToken(token);
+  const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
   try {
     // 🧪 Subir comandos de prueba (guild commands)

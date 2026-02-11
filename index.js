@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Discord = require("discord.js");
 const path = require('path')
 const sqlite3 = require('sqlite3').verbose();
@@ -165,7 +166,7 @@ client.on('ready', async () => {
 
 client.slashCommands = new Discord.Collection()
 
-client.login(config.token)
+client.login(process.env.TOKEN);
 
 require('./handler')(client)
 
