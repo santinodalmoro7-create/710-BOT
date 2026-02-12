@@ -17,7 +17,7 @@ module.exports = {
         // ==========================================
         // 🔑 CONTROL DE PERMISOS POR ROL
         // ==========================================
-        const idRolPermitido = "1469968666425823274"; // <--- PEGA AQUÍ EL ID DEL ROL
+        const idRolPermitido = "1469968666425823274"; 
 
         if (!interaction.member.roles.cache.has(idRolPermitido)) {
             return interaction.reply({ 
@@ -31,7 +31,6 @@ module.exports = {
         const valor = interaction.options.getString('valor');
         const comprador = interaction.options.getUser('comprador');
 
-        // 🖼️ DICCIONARIO COMPLETO UNO POR UNO
         const imagenes = {
             'valorant': 'https://cdn.discordapp.com/attachments/1289423515199737929/1420549641895673987/Valorant-Logo-PNG-Image.png?ex=698e5f73&is=698d0df3&hm=5c5e6d8ae1d5d2a585cf8be4d771a9ebc702849f2a685381365a2a14762bcd26&',
             'counterstrike2': 'https://i.redd.it/d62aq07xnbpa1.png',
@@ -90,7 +89,6 @@ module.exports = {
             'decorations': 'https://cdn.discordapp.com/attachments/1471520378563068035/1471534083128561808/file_00000000252c720eb05b361937b63017.png?ex=698f4869&is=698df6e9&hm=2c10f3f7481deed565eed03b7cabf503c8efe9b89085e040869e610a87df8a8e&'
         };
 
-        // Si el producto no está en la lista, usa la imagen por defecto
         const imagenFinal = imagenes[productoInput] || 'https://cdn.discordapp.com/attachments/1471520378563068035/1471534083128561808/file_00000000252c720eb05b361937b63017.png?ex=698f4869&is=698df6e9&hm=2c10f3f7481deed565eed03b7cabf503c8efe9b89085e040869e610a87df8a8e&';
 
         const canalLogs = interaction.guild.channels.cache.get("1469619944676135033");
@@ -116,4 +114,4 @@ module.exports = {
             return interaction.reply({ content: '❌ Error: No se encontró el canal de logs.', ephemeral: true });
         }
     }
-};
+}; // <--- AQUÍ FALTABA ESTA LLAVE
