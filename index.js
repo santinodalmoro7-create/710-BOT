@@ -1,5 +1,5 @@
 require('dotenv').config();
-const Discord = require("discord.js");
+const Discord = require("discord.js"); // actualización
 const path = require('path')
 const sqlite3 = require('sqlite3').verbose();
 const config = require("./config.json")
