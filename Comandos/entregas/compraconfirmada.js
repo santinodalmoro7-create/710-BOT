@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+// Corregido: Subimos dos niveles (..) para encontrar el config desde la carpeta Comandos
 const config = require("../../config.json");
 
 module.exports = {
@@ -9,8 +10,14 @@ module.exports = {
             option.setName('producto')
                 .setDescription('Escribe el producto exacto (ej: gta v, nitro, etc.)')
                 .setRequired(true))
-        .addStringOption(option => option.setName('valor').setDescription('Monto pagado').setRequired(true))
-        .addUserOption(option => option.setName('comprador').setDescription('Usuario que compró').setRequired(true)),
+        .addStringOption(option => 
+            option.setName('valor')
+                .setDescription('Monto pagado')
+                .setRequired(true))
+        .addUserOption(option => 
+            option.setName('comprador')
+                .setDescription('Usuario que compró')
+                .setRequired(true)),
 
     async run(client, interaction) {
         
@@ -95,7 +102,8 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle('710 | Shop | Compra Aprobada')
-            .setColor(config.colorpredeterminado || 0x000000)
+            // Se usa config.color o un color negro por defecto si no lo encuentra
+            .setColor(config.color || 0x000000)
             .setDescription(
                 `👤 | **COMPRADOR(A):**\n<@${comprador.id}> | ${comprador.username}\n\n` +
                 `📜 | **PRODUCTO(S) COMPRADO(S):**\n${productoInput.toUpperCase()}\n\n` +
@@ -114,4 +122,4 @@ module.exports = {
             return interaction.reply({ content: '❌ Error: No se encontró el canal de logs.', ephemeral: true });
         }
     }
-}; // <--- AQUÍ FALTABA ESTA LLAVE
+};

@@ -1,81 +1,65 @@
-require("dotenv").config();
-const { REST, Routes, ApplicationCommandType } = require('discord.js');
-const { clientId, guildId, token } = require('../config.json');
-const fs = require('fs');
-const path = require('path');
+require('dotenv').config(); // <-- Esto permite leer tu archivo .env escondido
+const { REST, Routes } = require('discord.js');
+const fs = require('node:fs');
+const path = require('node:path');
 
 async function registerCommands() {
-  const commandsDir = path.join(__dirname, '..', 'Comandos');
-  const commandFolders = fs.readdirSync(commandsDir);
+    // Intentamos obtener el TOKEN y el CLIENT_ID de donde sea que estén (ENV o Config)
+    const token = process.env.TOKEN;
+    const clientId = process.env.CLIENT_ID;
 
-  const globalCommands = [];  // Solo comandos globales
-  const guildCommands = [];   // Comandos del servidor
+    if (!token || !clientId) {
+        console.error("❌ ERROR: No se encontró el TOKEN o CLIENT_ID en las variables de entorno (.env o Railway).");
+        return;
+    }
 
-  for (const folder of commandFolders) {
-    const folderPath = path.join(commandsDir, folder);
-    const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
+    const commands = [];
+    const commandsPath = path.resolve(__dirname, '..', 'Comandos');
 
-    for (const file of commandFiles) {
-      const command = require(path.join(folderPath, file));
-      
-      if (command.name && command.description) {
-        const data = {
-          name: command.name,
-          description: command.description.slice(0, 100),
-          type: command.type || ApplicationCommandType.ChatInput,
-          options: command.options || []
-        };
-
-        // Solo agregar /ping a los comandos globales
-        if (command.name === 'ping') {
-          globalCommands.push(data);
-        } else {
-          guildCommands.push(data); // Los demás comandos van a los comandos de servidor
+    // Función para buscar archivos .js en carpetas y subcarpetas
+    const getFilesRecursively = (dir) => {
+        let files = [];
+        if (!fs.existsSync(dir)) return files;
+        const list = fs.readdirSync(dir);
+        for (const item of list) {
+            const fullPath = path.join(dir, item);
+            if (fs.statSync(fullPath).isDirectory()) {
+                files = files.concat(getFilesRecursively(fullPath));
+            } else if (item.endsWith('.js')) {
+                files.push(fullPath);
+            }
         }
-      }
-    }
-  }
+        return files;
+    };
 
-  const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+    const commandFiles = getFilesRecursively(commandsPath);
+    console.log(`🔍 Buscando comandos en: ${commandsPath}`);
 
-  try {
-    // 🧪 Subir comandos de prueba (guild commands)
-    console.log('🔄 Subiendo comandos de prueba al servidor...');
-    await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-      body: guildCommands
-    });
-    console.log('✅ Comandos de prueba registrados.');
-
-    // 🌍 Verificar y subir los comandos globales (solo el /ping)
-    if (globalCommands.length > 0) {
-      console.log('📋 Verificando comandos globales actuales...');
-      const currentGlobalCommands = await rest.get(Routes.applicationCommands(clientId));
-
-      const changed =
-        currentGlobalCommands.length !== globalCommands.length ||
-        currentGlobalCommands.some((cmd, i) => {
-          const newCmd = globalCommands[i];
-          return (
-            cmd.name !== newCmd.name ||
-            cmd.description !== newCmd.description ||
-            JSON.stringify(cmd.options) !== JSON.stringify(newCmd.options)
-          );
-        });
-
-      if (changed) {
-        console.log('🌍 Cambios detectados. Subiendo comandos globales...');
-        await rest.put(Routes.applicationCommands(clientId), {
-          body: globalCommands
-        });
-        console.log('✅ Comandos globales registrados.');
-      } else {
-        console.log('✔️ Comandos globales sin cambios. No se actualizaron.');
-      }
+    for (const filePath of commandFiles) {
+        const command = require(filePath);
+        if (command.data) {
+            commands.push(command.data.toJSON());
+            console.log(`✅ Comando detectado: ${path.basename(filePath)}`);
+        }
     }
 
-  } catch (error) {
-    console.error('❌ Error al registrar comandos:', error);
-  }
+    if (commands.length === 0) {
+        console.log("⚠️ No se detectaron comandos válidos para subir.");
+        return;
+    }
+
+    const rest = new REST({ version: '10' }).setToken(token);
+
+    try {
+        console.log(`🚀 Subiendo ${commands.length} comandos a Discord...`);
+        await rest.put(
+            Routes.applicationCommands(clientId),
+            { body: commands },
+        );
+        console.log("✅ ¡PROCESO COMPLETADO CON ÉXITO!");
+    } catch (error) {
+        console.error("❌ ERROR AL REGISTRAR:", error);
+    }
 }
 
 module.exports = registerCommands;
