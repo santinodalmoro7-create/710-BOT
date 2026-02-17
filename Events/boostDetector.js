@@ -43,7 +43,7 @@ module.exports = (client) => {
                     new ButtonBuilder()
                         .setLabel('Reclamar Recompensas')
                         .setStyle(ButtonStyle.Link)
-                        .setURL('https://discord.com/channels/1469618754282586154/1469620089115377827')
+                        .setURL('https://discord.com/channels/1469618754282586154/1469861946135416872)
                 );
 
                 // Enviar mensaje

@@ -37,19 +37,19 @@ module.exports = {
       new Discord.ButtonBuilder()
         .setCustomId("opc1")
         .setLabel("Compra")
-        .setEmoji("1415071860131102841")
+        .setEmoji("1469945642909438114")
         .setStyle(Discord.ButtonStyle.Secondary),
 
       new Discord.ButtonBuilder()
         .setCustomId("opc2")
         .setLabel("Soporte")
-        .setEmoji("1415072399942090883")
+        .setEmoji("1469621686155346042")
         .setStyle(Discord.ButtonStyle.Secondary),
 
       new Discord.ButtonBuilder()
         .setCustomId("opc3")
         .setLabel("Partner")
-        .setEmoji("1415072383517196318")
+        .setEmoji("1471010330229477528")
         .setStyle(Discord.ButtonStyle.Secondary)
     );
 
