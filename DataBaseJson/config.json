@@ -1,1 +1,33 @@
-{}
+{
+    "ownerId": "1037094270697492582",
+    "clientId": "1470925924865413306",
+    "guildId": "1469618754282586154",
+    "staffsoporte": "1469620089115377827",
+    "colorpredeterminado": "#000001",
+    "sugerir_canal": "1469950357785546853",
+    "bienvenidas": {
+        "canal_id": "1469953972197654570",
+        "titulo": "¡Bienvenido a 710 Bot Shop!",
+        "imagen_footer": "https://i.imgur.com/tu-imagen.png"
+    },
+    "tickets": {
+        "categorias": {
+            "compra": "1469945642909438114",
+            "soporte": "1469621686155346042",
+            "partner": "1471010330229477528"
+        },
+        "config_visual": {
+            "titulo": "SISTEMA DE TICKETS",
+            "nombre_shop": "710 | Bot Shop",
+            "footer_text": "710 Shop - Calidad y Seguridad"
+        }
+    },
+    "canales_extra": {
+        "comandos": "1470928427199631412",
+        "tickets_logs": "1469620089115377827",
+        "sugerencia": "1471009947570409645",
+        "reglas": "1469950357785546853",
+        "payments": "1469950897910976562",
+        "feedback": "1470869238397931645"
+    }
+}
